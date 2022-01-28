@@ -1,7 +1,8 @@
 package com.example.autoimageslider
 
-class SliderItem(
-    private var image: Int
-) {
+import androidx.annotation.DrawableRes
 
-}
+data class SliderItem(
+    @DrawableRes
+    var image: Int
+)
