@@ -62,4 +62,14 @@ class MainActivity : AppCompatActivity() {
             viewPager2.setCurrentItem(viewPager2.currentItem + 1)
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        sliderHandler.removeCallbacks(sliderRunnable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sliderHandler.postDelayed(sliderRunnable, 3000)
+    }
 }

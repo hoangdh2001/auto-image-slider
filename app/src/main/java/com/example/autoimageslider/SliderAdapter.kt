@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
-class SliderAdapter(private val sliderItems: List<SliderItem>, private val viewPager2: ViewPager2): RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
+class SliderAdapter(private var sliderItems: ArrayList<SliderItem>, private val viewPager2: ViewPager2): RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
     class SliderViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageSlide)
     }
@@ -20,12 +20,16 @@ class SliderAdapter(private val sliderItems: List<SliderItem>, private val viewP
     override fun onBindViewHolder(holder: SliderViewHolder, position: Int) {
         val item = sliderItems[position]
         holder.imageView.setImageResource(item.image)
+        if (position == sliderItems.size - 2) {
+            viewPager2.post(runnable)
+        }
     }
 
     override fun getItemCount(): Int = sliderItems.size
 
     private val runnable = Runnable {
         kotlin.run {
+            sliderItems.addAll(sliderItems)
             notifyDataSetChanged()
         }
     }
