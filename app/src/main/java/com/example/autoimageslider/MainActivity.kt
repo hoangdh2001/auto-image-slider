@@ -2,6 +2,7 @@ package com.example.autoimageslider
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewPager2: ViewPager2
+    private val sliderHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,5 +48,18 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewPager2.setPageTransformer(compositePageTransformer)
+        viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                sliderHandler.removeCallbacks(sliderRunnable)
+                sliderHandler.postDelayed(sliderRunnable, 3000)
+            }
+        })
+    }
+
+    private val sliderRunnable = Runnable {
+        kotlin.run {
+            viewPager2.setCurrentItem(viewPager2.currentItem + 1)
+        }
     }
 }

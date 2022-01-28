@@ -23,4 +23,10 @@ class SliderAdapter(private val sliderItems: List<SliderItem>, private val viewP
     }
 
     override fun getItemCount(): Int = sliderItems.size
+
+    private val runnable = Runnable {
+        kotlin.run {
+            notifyDataSetChanged()
+        }
+    }
 }
